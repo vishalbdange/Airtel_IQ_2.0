@@ -54,14 +54,14 @@ def textFromAudio():
     # response_bytes = json.loads(getMedia(mediaId))
     response_bytes = (getMedia(mediaId)).json()
     print("USING AIRTEL IQ CPaaS DOWNLOAD MEDIA API")
-    # print(response_bytes)
+    print(response_bytes)
     bytes_data = response_bytes["bytes"]
     bytes_data = str(bytes_data)
-    # print("Bytes data from Download Media")
-    # print(bytes_data)
+    print("Bytes data from Download Media")
+    print(bytes_data)
     
     b = base64.b64decode(bytes_data.encode())
-    # print(b)
+    print(b)
     if os.path.exists("myfile.ogg"):
         os.remove("myfile.ogg")
     else:
@@ -70,13 +70,10 @@ def textFromAudio():
         f.write(b)
     # with open('myfile.wav', mode='bx') as f:
     #     f.write(b)
-    try:
-        data, samplerate = soundfile.read('myfile.ogg')
-    except:
-        return ''
+    data, samplerate = soundfile.read('myfile.ogg')
     # data, samplerate = soundfile.read('myfile.wav')
     print(samplerate)
-    soundfile.write('new.wav', data, samplerate, subtype='PCM_32')
+    soundfile.write('new.wav', data, samplerate, subtype='PCM_16')
     # soundfile.write('new.wav', b, 10000, subtype='PCM_16')
  
     file_audio = sr.AudioFile(r"new.wav")
@@ -86,7 +83,7 @@ def textFromAudio():
     print(type(audio_text))
     audio_text = r.recognize_google(audio_text)
     print(audio_text)
-    return str(audio_text)
+    return audio_text
 
 if __name__ =='__main__':  
     print("In th server")
